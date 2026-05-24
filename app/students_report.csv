@@ -1,0 +1,38 @@
+ID,Name,Class,Maths,Physics,Chemistry,English,Attendance,Total,Average
+1,Dev,10A,78,82,75,80,92.5,315,78.75
+2,Karan,9A,65,70,68,72,85.0,275,68.75
+3,Manav,11B,90,88,92,85,97.2,355,88.75
+4,Darshan,5C,55,60,58,64,74.8,237,59.25
+5,Karan,12B,95,91,89,93,95.6,368,92.0
+6,Rahul Sharma,10A,72,74,70,69,88.4,285,71.25
+7,Aman Verma,10B,81,79,84,77,90.1,321,80.25
+8,Priya Singh,11A,60,65,63,67,69.5,255,63.75
+9,Sneha Patel,11B,88,92,90,86,98.0,356,89.0
+10,Arjun Mehta,12A,49,55,52,58,76.3,214,53.5
+
+
+
+D:\project>cd /d D:\project
+
+D:\project>dir app
+ Volume in drive D is New Volume
+ Volume Serial Number is DE2F-8D9E
+
+ Directory of D:\project\app
+
+16-05-2026  01:20    <DIR>          .
+15-05-2026  18:22    <DIR>          ..
+16-05-2026  01:55             2,548 dashboard.py
+16-05-2026  01:45             1,688 login.py
+16-05-2026  01:48             1,108 main.py
+15-05-2026  21:33               498 students_report.csv
+16-05-2026  01:56    <DIR>          __pycache__
+               4 File(s)          5,842 bytes
+               3 Dir(s)  16,069,038,080 bytes free
+
+D:\project>python -m streamlit run app/main.py
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.247.61.202:8501
