@@ -1,20 +1,18 @@
 import streamlit as st
 from datetime import datetime
 
-from login import login_page
-from dashboard import show_dashboard
-from crud import crud_page
-from profile import profile_page
-from ranking import ranking_page
+# =========================
+# APP MODULE IMPORTS (FIXED FOR STREAMLIT CLOUD)
+# =========================
+from app.login import login_page
+from app.dashboard import show_dashboard
+from app.crud import crud_page
+from app.profile import profile_page
+from app.ranking import ranking_page
 
-# ✅ NOTICE IMPORT
-from notice import notice_page
-
-# ✅ FEES IMPORT
-from fees import fees_page
-
-# ✅ ALERTS IMPORT
-from alerts import alerts_page
+from app.notice import notice_page
+from app.fees import fees_page
+from app.alerts import alerts_page
 
 
 # =========================
@@ -26,6 +24,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
 
 # =========================
 # SESSION STATE INIT
@@ -65,7 +64,6 @@ def apply_theme():
             border-radius: 15px;
             padding: 15px;
             border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
         }
 
         .stButton > button {
@@ -139,7 +137,6 @@ def menu():
 
     role = st.session_state.get("role")
 
-    # ✅ ADMIN MENU
     if role == "admin":
         return [
             "Dashboard",
@@ -151,7 +148,6 @@ def menu():
             "Ranking"
         ]
 
-    # ✅ STUDENT MENU
     return [
         "Dashboard",
         "Notice Board",
@@ -177,7 +173,6 @@ def main():
     # SIDEBAR
     st.sidebar.title("⚡ PRO DASHBOARD")
 
-    # DARK MODE
     dark = st.sidebar.checkbox(
         "🌙 Dark Mode",
         value=st.session_state.dark_mode
@@ -194,29 +189,22 @@ def main():
 
     st.sidebar.markdown("---")
 
-    st.sidebar.success(
-        f"👤 {st.session_state.user}"
-    )
+    st.sidebar.success(f"👤 {st.session_state.user}")
+    st.sidebar.info(f"🔐 {st.session_state.role}")
 
-    st.sidebar.info(
-        f"🔐 {st.session_state.role}"
-    )
-
-    # =========================
     # LOGOUT
-    # =========================
     if st.sidebar.button("🚪 Logout"):
 
         st.session_state.logged_in = False
         st.session_state.user = None
         st.session_state.role = None
 
-        st.experimental_rerun()
+        st.rerun()   # ✅ FIXED (NEW STREAMLIT WAY)
 
     header()
 
     # =========================
-    # PAGE ROUTING
+    # ROUTING
     # =========================
     if page == "Dashboard":
         show_dashboard()
@@ -230,7 +218,6 @@ def main():
     elif page == "Fees Panel":
         fees_page()
 
-    # ✅ ALERTS PAGE
     elif page == "Alerts":
         alerts_page()
 
