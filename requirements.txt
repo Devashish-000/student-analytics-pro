@@ -3,5 +3,4 @@ pandas
 numpy
 plotly
 scikit-learn
-reportlab==3.5.68
-
+reportlab
