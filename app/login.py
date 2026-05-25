@@ -14,6 +14,9 @@ conn = sqlite3.connect(db_path, check_same_thread=False)
 cursor = conn.cursor()
 
 
+# =========================
+# LOGIN PAGE
+# =========================
 def login_page():
 
     # =========================
@@ -28,9 +31,9 @@ def login_page():
         }
 
         .login-box {
-            max-width: 400px;
+            max-width: 420px;
             margin: auto;
-            margin-top: 100px;
+            margin-top: 90px;
             padding: 35px;
             border-radius: 15px;
             background: #111827;
@@ -39,10 +42,17 @@ def login_page():
 
         .title {
             text-align: center;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 25px;
         }
 
         .stTextInput > div > div > input {
@@ -72,11 +82,17 @@ def login_page():
     st.markdown("<div class='login-box'>", unsafe_allow_html=True)
 
     st.markdown(
-        "<div class='title'>🎓 Student Login</div>",
+        "<div class='title'>🎓 Student Analytics</div>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        "<div class='subtitle'>AI Powered Performance System Login</div>",
         unsafe_allow_html=True
     )
 
     username = st.text_input("👤 Username")
+
     password = st.text_input("🔑 Password", type="password")
 
     # =========================
@@ -84,11 +100,13 @@ def login_page():
     # =========================
     if st.button("Login 🚀"):
 
-        if username.strip() == "" or password.strip() == "":
+        if not username or not password:
             st.warning("Please enter username and password ❗")
             return
 
-        # FETCH USER
+        # =========================
+        # ADMIN / STUDENT LOGIN
+        # =========================
         cursor.execute(
             "SELECT username, password, role FROM users WHERE username=?",
             (username,)
@@ -97,15 +115,12 @@ def login_page():
         user = cursor.fetchone()
 
         # =========================
-        # VERIFY USER
+        # VERIFY ADMIN/STUDENT
         # =========================
         if user:
 
-            db_username = user[0]
-            db_password = user[1]
-            db_role = user[2]
+            db_username, db_password, db_role = user
 
-            # VERIFY HASHED PASSWORD
             if verify_password(password, db_password):
 
                 st.session_state.logged_in = True
@@ -116,14 +131,46 @@ def login_page():
 
                 try:
                     st.rerun()
-
                 except:
                     st.experimental_rerun()
 
             else:
-                st.error("Invalid Password ❌")
+                st.error("❌ Invalid Password")
 
+        # =========================
+        # TEACHER LOGIN
+        # =========================
         else:
-            st.error("User Not Found ❌")
+
+            cursor.execute(
+                "SELECT username, password FROM teachers WHERE username=?",
+                (username,)
+            )
+
+            teacher = cursor.fetchone()
+
+            if teacher:
+
+                teacher_username, teacher_password = teacher
+
+                if password == teacher_password:
+
+                    st.session_state.logged_in = True
+                    st.session_state.user = teacher_username
+                    st.session_state.role = "teacher"
+
+                    st.success(f"Welcome {teacher_username} 🚀 (teacher)")
+
+                    try:
+                        st.rerun()
+                    except:
+                        st.experimental_rerun()
+
+                else:
+                    st.error("❌ Invalid Teacher Password")
+
+            else:
+                st.error("❌ User Not Found")
 
     st.markdown("</div>", unsafe_allow_html=True)
+

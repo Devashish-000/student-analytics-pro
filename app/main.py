@@ -192,14 +192,16 @@ def main():
     st.sidebar.success(f"👤 {st.session_state.user}")
     st.sidebar.info(f"🔐 {st.session_state.role}")
 
-    # LOGOUT
+    # =========================
+    # LOGOUT (FIXED)
+    # =========================
     if st.sidebar.button("🚪 Logout"):
 
         st.session_state.logged_in = False
         st.session_state.user = None
         st.session_state.role = None
 
-        st.rerun()   # ✅ FIXED (NEW STREAMLIT WAY)
+        st.experimental_rerun()
 
     header()
 
