@@ -136,3 +136,16 @@ It helps schools and teachers to monitor student performance, attendance, risk a
 
 
 
+## 📸 Screenshots
+
+### 🎓 Dashboard View
+![Dashboard](screenshots/dashboard.png)
+
+### 🧠 AI Insights
+![AI Insights](screenshots/ai-insights.png)
+
+### 📊 Charts
+![Charts](screenshots/charts.png)
+
+### 🤖 Chatbot
+![Chatbot](screenshots/chatbot.png)
